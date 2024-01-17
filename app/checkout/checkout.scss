@@ -1,0 +1,200 @@
+.checkout {
+  .billing {
+    font-size: 1.5rem;
+    font-weight: 600;
+    padding: 1rem 0.5rem;
+
+    @media (min-width: 768px) {
+      width: 80%;
+      margin: 0 auto;
+    }
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0 0.5rem;
+
+    @media (min-width: 768px) {
+      width: 80%;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 1024px) {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  .form__container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .first__last {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      @media (min-width: 1024px) {
+        flex-direction: row;
+        gap: 2rem;
+      }
+    }
+
+    .form__info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+
+      input,
+      select {
+        height: 3rem;
+        border-radius: 0.3rem;
+        padding: 0.5rem;
+        border: 1px solid #9f9f9f;
+        outline: none;
+        background-color: unset;
+
+        @media (min-width: 1024px) {
+          height: 3.4rem;
+          border-radius: 0.5rem;
+        }
+      }
+    }
+  }
+
+  .bank__info {
+    @media (min-width: 1024px) {
+      width: 50%;
+    }
+    .total {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px solid #d9d9d9;
+      padding-bottom: 1rem;
+
+      .product {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        h2 {
+          font-size: 1.25rem;
+        }
+        h3 {
+          font-size: 1rem;
+          font-weight: 400;
+        }
+      }
+
+      .subtotal {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        h2 {
+          font-size: 1.25rem;
+        }
+        p {
+          font-size: 1rem;
+          font-weight: 300;
+        }
+        .total__amt {
+          color: #b88e2f;
+          font-weight: 700;
+        }
+      }
+    }
+
+    .bank__details {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      padding-top: 1rem;
+      padding-bottom: 2rem;
+
+      .personal__data {
+        color: #000;
+        text-align: justify;
+        font-family: Poppins;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 300;
+        line-height: normal;
+        padding-bottom: 1.5rem;
+        span {
+          font-weight: 600;
+        }
+      }
+
+      .ellipse1,
+      .ellipse2 {
+        h3 {
+          display: flex;
+          gap: 6px;
+          color: #000;
+          font-family: Poppins;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+        }
+        p {
+          color: #9f9f9f;
+          font-size: 0.875rem;
+          font-weight: 300;
+          text-align: justify;
+          padding-top: 0.6rem;
+        }
+      }
+
+      .ellipse2 {
+        h3 {
+          color: #9f9f9f;
+        }
+      }
+
+      button {
+        padding: 1rem 0;
+        border-radius: 1rem;
+        border: 1px solid #000000;
+        background-color: unset;
+        width: 60%;
+        margin: 0 auto;
+        cursor: pointer;
+
+        @media (min-width: 1024px) {
+          width: 45%;
+          padding: 1.2rem 0;
+        }
+      }
+    }
+  }
+
+  .delivery__details {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 0 0.5rem;
+
+    @media (min-width: 768px) {
+      width: 80%;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 1024px) {
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 1rem 0.5rem;
+    }
+
+    .details {
+      h2 {
+        font-size: 1.5rem;
+      }
+      p {
+        color: #9f9f9f;
+        margin-top: 0.5rem;
+      }
+    }
+  }
+}

@@ -1,0 +1,145 @@
+$background-color: #fff;
+$text-color: #000;
+
+.hero-container {
+  background-image: url("../../assets/desktop-shop-bg.png");
+  width: 100%;
+  height: 400px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+  text-align: center;
+
+  h1 {
+    text-align: center;
+    position: absolute;
+    font-family: poppins;
+    top: 63%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: $text-color;
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+
+  .text-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+
+    .text {
+      color: $text-color;
+      font-family: Poppins;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+    }
+  }
+
+  .section-1 {
+    background: #faf4f4;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 80px;
+    padding: 0 30px;
+
+    .section-1-left {
+      width: 40%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .vertical-line {
+        border-left: 2px solid #9f9f9f;
+        height: 30px;
+      }
+
+      .section-1-left-text {
+        color: $text-color;
+        font-family: Poppins;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+      }
+    }
+
+    .section-1-right {
+      width: 30%;
+      height: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .section-1-right-text {
+        color: $text-color;
+        font-family: Poppins;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+      }
+
+      .section-1-right-span {
+        background: #fff;
+        padding: 2px 15px;
+      }
+    }
+  }
+
+  .mobile-section-1 {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-container {
+    background-image: url("../../assets/mobile-shop-bg.png");
+    height: 236px;
+
+    .image {
+      margin-top: 2rem;
+      width: 100px;
+      height: 100px;
+    }
+
+    h1 {
+      font-size: 32px;
+    }
+
+    .text-container {
+      margin-top: 3rem;
+
+      .text {
+        font-size: 14px;
+        font-weight: 300;
+      }
+    }
+
+    .section-1 {
+      display: none;
+    }
+
+    .mobile-section-1 {
+      background: #faf4f4;
+      margin-top: 3rem;
+      width: 100%;
+      height: 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .mobile-section-1-span {
+        background: #fff;
+        padding: 2px 5px;
+      }
+    }
+  }
+}
