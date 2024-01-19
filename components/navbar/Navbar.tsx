@@ -1,9 +1,8 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useSelector } from "react-redux";
 import Link from "next/link";
-import { useState, useEffect } from "react";
 import {
   FavoriteIcon,
   ProfileIcon,
@@ -18,12 +17,21 @@ import { useDispatch } from "react-redux";
 import { removeFromCart } from "../../redux/slices/cartSlice";
 import "./navbar.scss";
 
+interface CartItem {
+  id: string;
+  title: string;
+  price: number;
+  qty: number;
+  image: string;
+}
+
 function Navbar() {
   const dispatch = useDispatch();
   const [navbar, setNavbar] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const cartItems = useSelector((state:any) => state.cart);
+  // Ensure that cartItems is always an array of CartItem
+  const cartItems: CartItem[] = useSelector((state: any) => state.cart) || [];
 
   useEffect(() => {
     navbar && screen.width < 480
@@ -53,18 +61,16 @@ function Navbar() {
   };
 
   // Calculate total price based on items in the cart
-  const total = cartItems.reduce((acc: any, item: any) => {
-    return acc + item.price * item.qty;
-  }, 0);
+  const total = Array.isArray(cartItems)
+    ? cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+    : 0;
 
   return (
     <nav>
       {/* dropdown start */}
-      {/* <div className="dropdown-container close"> */}
       <div className={`dropdown-container ${dropdownOpen ? "open" : "close"}`}>
         <div className="dropdown-heading">
           <h1>Shopping Cart</h1>
-
           <a href="" onClick={closeDropdown}>
             <DropDownCloseIcon />
           </a>
@@ -74,7 +80,7 @@ function Navbar() {
         </div>
 
         <div className="cart-items-container">
-          {cartItems.map((item: any) => (
+          {cartItems.map((item) => (
             <div key={item.id} className="cart-items">
               <Image
                 src={item.image}
@@ -98,8 +104,6 @@ function Navbar() {
               >
                 <ClearCart />
               </div>
-
-              {/* Add more details as needed */}
             </div>
           ))}
         </div>

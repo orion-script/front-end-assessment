@@ -15,9 +15,11 @@ function Page() {
   // const dispatch = useDispatch();
   const cartItems = useSelector((state: any) => state.cart);
 
-  const total = cartItems.reduce((acc: any, item: any) => {
+  const total = cartItems?.reduce((acc: any, item: any) => {
     return acc + item.price * item.qty;
   }, 0);
+
+  console.log("CARTITEMS", cartItems);
 
   return (
     <div className="cart-container">

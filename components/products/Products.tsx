@@ -50,8 +50,6 @@ const Products: React.FC = () => {
     fetchData();
   }, []);
 
-  console.log("Products", products);
-
   return (
     <div className="product-container">
       {loading && <Spinner />}

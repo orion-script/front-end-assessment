@@ -29,7 +29,7 @@ import {
 import "../../../styles/singleproduct.scss";
 
 interface ProductDetails {
-  id: string;
+  id: number;
   title: string;
   price: number;
   description: string;
@@ -56,14 +56,12 @@ function Page({ params }: { params: { productId: string } }) {
           `https://dummyjson.com/products/${params.productId}`
         );
         setProductDetails(response.data);
-        // Check if the product is already in the cart
         const existingItem = cart.find(
           (item: any) => item.id === response.data.id
         );
         setInCart(Boolean(existingItem));
       } catch (error) {
         console.error("Error fetching product details:", error);
-        // setError("Error fetching product details. Please try again later.");
       } finally {
         setLoading(false);
       }
@@ -75,10 +73,8 @@ function Page({ params }: { params: { productId: string } }) {
   const handleAddToCart = () => {
     if (productDetails) {
       if (inCart) {
-        // Dispatch an action to remove the product from the cart
         dispatch(removeFromCart(productDetails.id));
       } else {
-        // Dispatch an action to add the product to the cart
         dispatch(
           addToCart({
             id: productDetails.id,
@@ -89,8 +85,6 @@ function Page({ params }: { params: { productId: string } }) {
           })
         );
       }
-
-      // Update the inCart state
       setInCart((prev) => !prev);
     }
   };
@@ -99,17 +93,10 @@ function Page({ params }: { params: { productId: string } }) {
     return <div>.</div>;
   }
 
-  const {
-    // title,
-    // price,
-    // description,
-    images,
-  } = productDetails;
+  const { images } = productDetails;
 
   const [frame1Image, frame2Image, frame3Image, frame4Image, mainProductImage] =
     images;
-  console.log(productDetail);
-  // console.log("Quantity", productDetail.qty);
   return (
     <div className="product-container">
       <Navbar />
@@ -158,10 +145,6 @@ function Page({ params }: { params: { productId: string } }) {
             />
           </div>
           <Image
-            // src={
-            //   productDetails?.images?.[productDetails?.images.length - 1] || ""
-            // }
-            // src={mainProductImage}
             src={productDetails?.thumbnail}
             alt="product-image"
             width={200}
