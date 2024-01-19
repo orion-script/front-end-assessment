@@ -13,6 +13,8 @@ pnpm dev
 # or
 bun dev
 ```
+I chose to use reduxtoolkit instead of redux because it's easy compare to redux (Redux has a lots of boiler plate that i have to write which i won't have to write in reduxtoolkit). After installing the reduxtookit, i created a folder(Redux) then created my store.ts inside the Redux folder, Then i created a slices folder inside my Redux folder and the Slices folder consist of my cartSlice.ts. I ran into a problem here and i was getting an error in my browser "invariant expected app router to be mounted", I was able to solve the error by creating a Providers.tsx file inside my Redux folder and inport my Provider and store file there adn then import my Provider.tsx inside my layout.tsx as a parent container.
+Seriously, it was very hard completing this project because i had to write 4 exams this same week while coding this project out, i had some problems with the dependency compatibility at some point but i was able to solve those problems with the help of nextjs documentation, It would be a blessing if i get this job plus i am now a Graduate and need job.
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
