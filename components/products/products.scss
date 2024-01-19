@@ -9,12 +9,16 @@ $text-color: #000;
   text-align: center;
   padding: 20px;
 
-  .prodocts {
+  .products {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 25px;
     margin-bottom: 10rem;
+
+    p {
+      display: none;
+    }
 
     h1 {
       font-size: 24px;
@@ -25,13 +29,14 @@ $text-color: #000;
       height: 350px;
 
       .product-image {
-        background-color: blue;
         width: 100%;
         height: 250px;
         margin-bottom: 10px;
 
         img {
-          border-radius: 8px;
+          object-fit: cover;
+          width: 100%;
+          height: 100%;
         }
       }
 
@@ -106,7 +111,7 @@ $text-color: #000;
 
 @media (max-width: 768px) {
   .product-container {
-    .prodocts {
+    .products {
       grid-template-columns: repeat(2, 1fr);
       grid-gap: 20px;
       margin-bottom: 1rem;

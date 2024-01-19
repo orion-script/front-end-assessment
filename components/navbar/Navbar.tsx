@@ -1,5 +1,7 @@
 "use client";
 import React from "react";
+import Image from "next/image";
+import { useSelector } from "react-redux";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import {
@@ -10,12 +12,18 @@ import {
   MenuOpenIcon,
   MenuCloseIcon,
   DropDownCloseIcon,
+  ClearCart,
 } from "../SVG";
+import { useDispatch } from "react-redux";
+import { removeFromCart } from "../../redux/slices/cartSlice";
 import "./navbar.scss";
 
 function Navbar() {
+  const dispatch = useDispatch();
   const [navbar, setNavbar] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const cartItems = useSelector((state:any) => state.cart);
 
   useEffect(() => {
     navbar && screen.width < 480
@@ -39,6 +47,16 @@ function Navbar() {
     document.body.classList.remove("none");
   };
 
+  const handleClearCart = (productId: string) => {
+    // Dispatch an action to clear the cart
+    dispatch(removeFromCart(productId));
+  };
+
+  // Calculate total price based on items in the cart
+  const total = cartItems.reduce((acc: any, item: any) => {
+    return acc + item.price * item.qty;
+  }, 0);
+
   return (
     <nav>
       {/* dropdown start */}
@@ -55,10 +73,40 @@ function Navbar() {
           <hr className="horizontal-line" />
         </div>
 
-        <div className="cart-items-container"></div>
+        <div className="cart-items-container">
+          {cartItems.map((item: any) => (
+            <div key={item.id} className="cart-items">
+              <Image
+                src={item.image}
+                alt=""
+                width={50}
+                height={50}
+                className="cart-image"
+              />
+              <div className="products">
+                <p className="title">{item.title}</p>
+                <div className="products-text">
+                  <p className="qty"> {item.qty}</p>
+                  <p className="x">x</p>
+                  <p className="price">Rs. {item.price}</p>
+                </div>
+              </div>
+
+              <div
+                className="clear-cart"
+                onClick={() => handleClearCart(item.id)}
+              >
+                <ClearCart />
+              </div>
+
+              {/* Add more details as needed */}
+            </div>
+          ))}
+        </div>
+
         <div className="total">
           <p className="text">Subtotal</p>
-          <p className="number">Rs. 250,000.00</p>
+          <p className="number">Rs. {total}</p>
         </div>
         <hr className="hr" />
         <div className="buttons-container">
@@ -84,16 +132,16 @@ function Navbar() {
         className={`${navbar ? "block" : "hidden"} links-container`}
       >
         <li>
-          <a href="">Home</a>
+          <a href="/">Home</a>
         </li>
         <li>
           <a href="/">Shop</a>
         </li>
         <li>
-          <a href="">About</a>
+          <a href="#">About</a>
         </li>
         <li>
-          <a href="">Contact</a>
+          <a href="#">Contact</a>
         </li>
       </ul>
 

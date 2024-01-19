@@ -1,8 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import Image from "next/image";
 import axios from "axios";
 import Delivery from "../delivery/Delivery";
+import Spinner from "../spinner/spinner";
 import "./products.scss";
 
 interface ApiResponse {
@@ -12,15 +14,14 @@ interface ApiResponse {
   limit: number;
 }
 
-// Assuming your Product type is already defined
 interface Product {
   id: number;
   title: string;
   description: string;
   thumbnail: string;
   price: number;
+  images: [];
   discountPercentage: number;
-  // Add any other necessary properties
 }
 
 const Products: React.FC = () => {
@@ -53,30 +54,26 @@ const Products: React.FC = () => {
 
   return (
     <div className="product-container">
-      {errorMessage && (
-        <div className="font-bold text-center text-xl italic mt-20">
-          {errorMessage}
-        </div>
-      )}
-      <div className="prodocts">
-        {loading ? (
-          <h1>Loading.....</h1>
-        ) : products.length > 0 ? (
-          products.map((product: Product, id: number) => (
-            <div key={id} className="product-card">
-              <div className="product-image">
-                {/* <Image
-                  src={product.thumbnail}
-                  alt={product.title}
-                  width={200}
-                  height={200}
-                /> */}
+      {loading && <Spinner />}
+      {errorMessage && <div>{errorMessage}</div>}
+      <div className="products">
+        {products.length > 0 ? (
+          products.map((product: Product) => (
+            <Link key={product.id} href={`/products/${product.id}`} passHref>
+              <div className="product-card">
+                <div className="product-image">
+                  <Image
+                    src={product.images?.[product.images.length - 1] || ""}
+                    alt={product.title}
+                    width={200}
+                    height={200}
+                  />
+                </div>
+                <div className="product-title">{product.title}</div>
+                <div className="product-description">{product.description}</div>
+                <div className="product-price">Rs. {product.price}</div>
               </div>
-              {/* <div className="product-text"> */}
-              <div className="product-title">{product.description}</div>
-              <div className="product-price">Rs. {product.price}</div>
-              {/* </div> */}
-            </div>
+            </Link>
           ))
         ) : (
           <p>No products available.</p>

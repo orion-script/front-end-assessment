@@ -1,34 +1,119 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 import Image from "next/image";
-import productImage from "../../assets/chair.png";
-import frame1 from "../../assets/frame-1.svg";
-import frame2 from "../../assets/far.svg";
-import frame3 from "../../assets/frame-3.svg";
-import frame4 from "../../assets/frame-4.svg";
-import product1 from "../../assets/Group107.png";
-import product2 from "../../assets/Group106.png";
-import chair1 from "../../assets/Trenton-modular-sofa_31.png";
-import chair2 from "../../assets/Granite-dining-table-with-dining-chair-1.png";
-import chair3 from "../../assets/Outdoor-bar-table-and-stool-1.png";
-import chair4 from "../../assets/Plain-console-with-teak-mirror-1.png";
-import Linkedin from "../../assets/akar-icons_linkedin-box-fill.svg";
+import product1 from "../../../assets/Group107.png";
+import product2 from "../../../assets/Group106.png";
+import chair1 from "../../../assets/Trenton-modular-sofa_31.png";
+import chair2 from "../../../assets/Granite-dining-table-with-dining-chair-1.png";
+import chair3 from "../../../assets/Outdoor-bar-table-and-stool-1.png";
+import chair4 from "../../../assets/Plain-console-with-teak-mirror-1.png";
+import Linkedin from "../../../assets/akar-icons_linkedin-box-fill.svg";
 import Navbar from "@/components/navbar/Navbar";
 import {
   ArrowrightIcon,
   StarIcon,
   FavIcon,
   FacebookIcon,
-  linkIcon,
   TwitterIcon,
-} from "../../components/SVG";
-import "./singleproduct.scss";
+} from "../../../components/SVG";
+import Spinner from "@/components/spinner/spinner";
 import Footer from "@/components/footer/Footer";
+import {
+  addToCart,
+  removeFromCart,
+  incrementQty,
+  decrementQty,
+} from "../../../redux/slices/cartSlice";
+import "../../../styles/singleproduct.scss";
 
-function Page() {
+interface ProductDetails {
+  id: string;
+  title: string;
+  price: number;
+  description: string;
+  thumbnail: string;
+  images: string[];
+  qty: number;
+}
+
+function Page({ params }: { params: { productId: string } }) {
+  const dispatch = useDispatch();
+  const productDetail = useSelector((state: any) => state.cart);
+  const [productDetails, setProductDetails] = useState<ProductDetails | null>(
+    null
+  );
+  const [loading, setLoading] = useState<boolean>(true);
+  const [quantity, setQuantity] = useState<number>(1);
+  const [inCart, setInCart] = useState<boolean>(false);
+
+  useEffect(() => {
+    const fetchProductDetails = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get<ProductDetails>(
+          `https://dummyjson.com/products/${params.productId}`
+        );
+        setProductDetails(response.data);
+        // Check if the product is already in the cart
+        const existingItem = cart.find(
+          (item: any) => item.id === response.data.id
+        );
+        setInCart(Boolean(existingItem));
+      } catch (error) {
+        console.error("Error fetching product details:", error);
+        // setError("Error fetching product details. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProductDetails();
+  }, [params.productId]);
+
+  const handleAddToCart = () => {
+    if (productDetails) {
+      if (inCart) {
+        // Dispatch an action to remove the product from the cart
+        dispatch(removeFromCart(productDetails.id));
+      } else {
+        // Dispatch an action to add the product to the cart
+        dispatch(
+          addToCart({
+            id: productDetails.id,
+            title: productDetails.title,
+            price: productDetails.price,
+            image: productDetails.thumbnail,
+            qty: quantity,
+          })
+        );
+      }
+
+      // Update the inCart state
+      setInCart((prev) => !prev);
+    }
+  };
+
+  if (!productDetails) {
+    return <div>.</div>;
+  }
+
+  const {
+    // title,
+    // price,
+    // description,
+    images,
+  } = productDetails;
+
+  const [frame1Image, frame2Image, frame3Image, frame4Image, mainProductImage] =
+    images;
+  console.log(productDetail);
+  // console.log("Quantity", productDetail.qty);
   return (
     <div className="product-container">
       <Navbar />
+      {loading && <Spinner />}
       <div className="product-section-1">
         <div className="product-section-1-inner">
           <p className="text">Home</p>
@@ -36,19 +121,53 @@ function Page() {
           <p className="text">Shop</p>
           <ArrowrightIcon />
           <div className="vertical-line"></div>
-          <p className="span">Asgaard sofa</p>
+          <p className="span">{productDetails?.title}</p>
         </div>
       </div>
 
       <div className="product-section-2">
         <div className="product-section-2-left">
           <div className="small-images">
-            <Image src={frame1} alt="" className="images" />
-            <Image src={frame2} alt="" className="images" />
-            <Image src={frame3} alt="" className="images" />
-            <Image src={frame4} alt="" className="images" />
+            <Image
+              src={frame1Image}
+              width={200}
+              height={200}
+              alt=""
+              className="images"
+            />
+            <Image
+              src={frame2Image}
+              width={200}
+              height={200}
+              alt=""
+              className="images"
+            />
+            <Image
+              src={frame3Image}
+              width={200}
+              height={200}
+              alt=""
+              className="images"
+            />
+            <Image
+              src={frame4Image}
+              width={200}
+              height={200}
+              alt=""
+              className="images"
+            />
           </div>
-          <Image src={productImage} alt="" className="big-images" />
+          <Image
+            // src={
+            //   productDetails?.images?.[productDetails?.images.length - 1] || ""
+            // }
+            // src={mainProductImage}
+            src={productDetails?.thumbnail}
+            alt="product-image"
+            width={200}
+            height={200}
+            className="big-images"
+          />
 
           <div className="dots">
             <div className="dot"></div>
@@ -60,8 +179,8 @@ function Page() {
         </div>
 
         <div className="product-section-2-right">
-          <h1>Asgaard sofa</h1>
-          <span>Rs. 250,000.00</span>
+          <h1>{productDetails?.title}</h1>
+          <span>Rs. {productDetails?.price}</span>
           <div className="ratings-container">
             <div className="stars">
               <StarIcon />
@@ -73,11 +192,7 @@ function Page() {
             <div className="vertical-line"></div>
             <p className="review-text">5 Customer Review</p>
           </div>
-          <p className="description">
-            Setting the bar as one of the loudest speakers in its class, the
-            Kilburn is a compact, stout-hearted hero with a well-balanced audio
-            which boasts a clear midrange and extended highs for a sound.
-          </p>
+          <p className="description">{productDetails?.description}</p>
           <p className="size-title">Size</p>
           <div className="size-container">
             <div className="">L</div>
@@ -92,11 +207,23 @@ function Page() {
           </div>
           <div className="cart-container">
             <div className="signs-container">
-              <p className="sign">-</p>
-              <p className="quatity">1</p>
-              <p className="sign">+</p>
+              <p
+                className="sign"
+                onClick={() => dispatch(decrementQty(productDetails?.id))}
+              >
+                -
+              </p>
+              <p className="quatity">{quantity}</p>
+              <p
+                className="sign"
+                onClick={() => dispatch(incrementQty(productDetails?.id))}
+              >
+                +
+              </p>
             </div>
-            <button className="addtocart-btn">Add To Cart</button>
+            <button className="addtocart-btn" onClick={handleAddToCart}>
+              {inCart ? "Remove from Cart" : "Add To Cart"}
+            </button>
           </div>
           <hr className="horizontal-line" />
 
