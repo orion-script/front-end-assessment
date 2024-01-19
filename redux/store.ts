@@ -16,7 +16,7 @@ import {
 } from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
-import logger from "redux-logger";
+// import logger from "redux-logger";
 import cartSlice from "./slices/cartSlice";
 // import storageSession from "reduxjs-toolkit-persist/lib/storage/session";
 import {
@@ -54,7 +54,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(logger),
+    }).concat(),
 });
 
 export const persistor = persistStore(store);
