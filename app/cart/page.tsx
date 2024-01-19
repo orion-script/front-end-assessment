@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { useDispatch } from "react-redux";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import Image from "next/image";
@@ -8,11 +7,9 @@ import Navbar from "@/components/navbar/Navbar";
 import CartHero from "@/components/cartHero/CartHero";
 import Footer from "@/components/footer/Footer";
 import Delivery from "@/components/delivery/Delivery";
-import prodoctimage from "../../assets/play.png";
 import "./cart.scss";
 
 function Page() {
-  // const dispatch = useDispatch();
   const cartItems = useSelector((state: any) => state.cart);
 
   const total = cartItems?.reduce((acc: any, item: any) => {
@@ -52,24 +49,6 @@ function Page() {
                 <p className="subtotal">Rs. {item.price}</p>
               </div>
             ))}
-            {/* <div className="product">
-              <div className="image">
-                <Image src={prodoctimage} alt="product" />
-                <p className="name">Asgaard sofa</p>
-              </div>
-              <p className="price">Rs. 250,000.00</p>
-              <p className="quantity">1</p>
-              <p className="subtotal">Rs. 250,000.00</p>
-            </div> */}
-            {/* <div className="product">
-              <div className="image">
-                <Image src={prodoctimage} alt="product" />
-                <p className="name">Asgaard sofa</p>
-              </div>
-              <p className="price">Rs. 250,000.00</p>
-              <p className="quantity">1</p>
-              <p className="subtotal">Rs. 250,000.00</p>
-            </div> */}
           </div>
         </div>
         <div className="cart-details-right">

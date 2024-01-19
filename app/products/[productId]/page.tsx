@@ -90,27 +90,31 @@ function Page({ params }: { params: { productId: string } }) {
   };
 
   if (!productDetails) {
-    return <div>.</div>;
+    return <div></div>;
   }
 
   const { images } = productDetails;
-
   const [frame1Image, frame2Image, frame3Image, frame4Image, mainProductImage] =
     images;
   return (
     <div className="product-container">
       <Navbar />
       {loading && <Spinner />}
-      <div className="product-section-1">
-        <div className="product-section-1-inner">
-          <p className="text">Home</p>
-          <ArrowrightIcon />
-          <p className="text">Shop</p>
-          <ArrowrightIcon />
-          <div className="vertical-line"></div>
-          <p className="span">{productDetails?.title}</p>
+      {loading && <Spinner />}
+      {loading ? (
+        <h1>Loading...</h1>
+      ) : (
+        <div className="product-section-1">
+          <div className="product-section-1-inner">
+            <p className="text">Home</p>
+            <ArrowrightIcon />
+            <p className="text">Shop</p>
+            <ArrowrightIcon />
+            <div className="vertical-line"></div>
+            <p className="span">{productDetails?.title}</p>
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="product-section-2">
         <div className="product-section-2-left">
