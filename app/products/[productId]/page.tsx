@@ -45,14 +45,12 @@ function Page({ params }: { params: { productId: string } }) {
   const [productDetails, setProductDetails] = useState<ProductDetails | null>(
     null
   );
-  const [loading, setLoading] = useState<boolean>(true);
   const [quantity, setQuantity] = useState<number>(1);
   const [inCart, setInCart] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
-        setLoading(true);
         const response = await axios.get<ProductDetails>(
           `https://dummyjson.com/products/${params.productId}`
         );
@@ -64,7 +62,6 @@ function Page({ params }: { params: { productId: string } }) {
       } catch (error) {
         console.error("Error fetching product details:", error);
       } finally {
-        setLoading(false);
       }
     };
 
@@ -91,7 +88,7 @@ function Page({ params }: { params: { productId: string } }) {
   };
 
   if (!productDetails) {
-    return <div></div>;
+    return <Spinner />;
   }
 
   const { images } = productDetails;
@@ -100,22 +97,16 @@ function Page({ params }: { params: { productId: string } }) {
   return (
     <div className="product-container">
       <Navbar />
-      {loading && <Spinner />}
-      {loading && <Spinner />}
-      {loading ? (
-        <h1>Loading...</h1>
-      ) : (
-        <div className="product-section-1">
-          <div className="product-section-1-inner">
-            <p className="text">Home</p>
-            <ArrowrightIcon />
-            <p className="text">Shop</p>
-            <ArrowrightIcon />
-            <div className="vertical-line"></div>
-            <p className="span">{productDetails?.title}</p>
-          </div>
+      <div className="product-section-1">
+        <div className="product-section-1-inner">
+          <p className="text">Home</p>
+          <ArrowrightIcon />
+          <p className="text">Shop</p>
+          <ArrowrightIcon />
+          <div className="vertical-line"></div>
+          <p className="span">{productDetails?.title}</p>
         </div>
-      )}
+      </div>
 
       <div className="product-section-2">
         <div className="product-section-2-left">
@@ -201,7 +192,7 @@ function Page({ params }: { params: { productId: string } }) {
               >
                 -
               </p>
-              <p className="quatity">{quantity}</p>
+              <p className="quatity">{productDetail[0].qty}</p>
               <p
                 className="sign"
                 onClick={() => dispatch(incrementQty(productDetails?.id))}

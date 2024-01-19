@@ -29,8 +29,6 @@ function Navbar() {
   const dispatch = useDispatch();
   const [navbar, setNavbar] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
-  // Ensure that cartItems is always an array of CartItem
   const cartItems: CartItem[] = useSelector((state: any) => state.cart) || [];
 
   useEffect(() => {
