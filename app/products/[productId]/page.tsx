@@ -40,6 +40,7 @@ interface ProductDetails {
 
 function Page({ params }: { params: { productId: string } }) {
   const dispatch = useDispatch();
+  const cart = useSelector((state: any) => state.cart);
   const productDetail = useSelector((state: any) => state.cart);
   const [productDetails, setProductDetails] = useState<ProductDetails | null>(
     null
@@ -68,7 +69,7 @@ function Page({ params }: { params: { productId: string } }) {
     };
 
     fetchProductDetails();
-  }, [params.productId]);
+  }, [params.productId, cart]);
 
   const handleAddToCart = () => {
     if (productDetails) {
