@@ -192,7 +192,7 @@ function Page({ params }: { params: { productId: string } }) {
               >
                 -
               </p>
-              <p className="quatity">{productDetail[0].qty}</p>
+              <p className="quatity">{productDetail[0]?.qty}</p>
               <p
                 className="sign"
                 onClick={() => dispatch(incrementQty(productDetails?.id))}
